@@ -1,30 +1,45 @@
 <?php
-     $name = $_POST['name'];
-     $visitor_email = $_POST['email'];
-     $subject = $_POST['subject'];
-     $message = $_POST['message'];
+use PHPMailer\PHPMailer\PHPMailer;
 
+if(isset($_POST['name']) && isset($_POST['email'])){
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $subject = $_POST['subject'];
+    $body = $_POST['body'];
 
-     $email_from = 'vivekvvk569@gmail.com';
+    require_once "PHPMailer/PHPMailer.php";
+    require_once "PHPMailer/SMTP.php";
+    require_once "PHPMailer/Exception.php";
 
-     $email_subject = "New Contact from workdone";
+    $mail = new PHPMailer();
 
-     $email_body = "Client Name: $name.\n".
-                   "Client Email: $visitor_email.\n". 
-                   "Client Subject: $subject.\n". 
-                   "Client Message: $message.\n";
+    //smtp settings
+    $mail->isSMTP();
+    $mail->Host = "smtp.gmail.com";
+    $mail->SMTPAuth = true;
+    $mail->Username = "youremail@gmail.com";
+    $mail->Password = 'yourpassword';
+    $mail->Port = 465;
+    $mail->SMTPSecure = "ssl";
 
+    //email settings
+    $mail->isHTML(true);
+    $mail->setFrom($email, $name);
+    $mail->addAddress("youremail@gmail.com");
+    $mail->Subject = ("$email ($subject)");
+    $mail->Body = $body;
 
-     $to = "workdone2002@gmail.com";
+    if($mail->send()){
+        $status = "success";
+        $response = "Email is sent!";
+    }
+    else
+    {
+        $status = "failed";
+        $response = "Something is wrong: <br>" . $mail->ErrorInfo;
+    }
 
-     $headers = "From: $email_from \r\n";
-
-     $headers .= "Reply-To: $visitor_email \r\n";
-
-     mail($to,$email_subject,$email_body,$headers);
-
-     header("Location: index.html");
-
-
+    exit(json_encode(array("status" => $status, "response" => $response)));
+}
 
 ?>
