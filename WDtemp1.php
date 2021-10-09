@@ -23,7 +23,7 @@
 
      mail($to,$email_subject,$email_body,$headers);
 
-     header("Location: WDtemp1.html");
+     header("Location: index.html");
 
 
 
