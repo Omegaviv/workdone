@@ -1,5 +1,5 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
+use PHPMAILER/PHPMailer.php;
 
 if(isset($_POST['name']) && isset($_POST['email'])){
     $name = $_POST['name'];
