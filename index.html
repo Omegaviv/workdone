@@ -394,6 +394,7 @@ body, html {
     <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> Phone: +91 8707882578</p>
     <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> Email: workdone2002@gmail.com</p>
     <br>
+    <h4 class="sent-noti"> </h4>
     <form action="WDtemp1.php"  id="contact"  target="_blank">
       <p><input id="name" class="w3-input w3-border" type="text" placeholder="Name" required name="Name"></p>
       <p><input id="email" class="w3-input w3-border" type="text" placeholder="Email" required name="Email"></p>
@@ -471,10 +472,22 @@ function w3_close() {
           message: message.val()
         }, success: function (response){
         $('#contact')[0].reset();
+        $("sent-noti").text("Meesage sent successfully.");
         }
         })
       }
       
+      }
+      function isNotEmpty(caller){
+      if(caller.val()==""){
+      caller.css('border','1px solid red');
+        return false;
+      }
+        else
+        {
+        caller,css('border','');
+          return true;
+        }
       }
   </script>
 
